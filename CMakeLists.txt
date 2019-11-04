@@ -7,15 +7,15 @@ else()
 endif()
 
 find_package(Threads)
-find_package(Boost COMPONENTS system REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+find_package(Boost COMPONENTS system regex REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
 
 add_executable(bulk_server main.cpp server.cpp session.cpp event_processor.cpp commands.h commands.cpp consumer.h consumer_out.h consumer_out.cpp consumer_file.h consumer_file.cpp producer.h producer.cpp)
 
 set_target_properties( bulk_server  PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED ON)
 
 target_include_directories(bulk_server PRIVATE "${CMAKE_BINARY_DIR}")
-target_link_libraries(bulk_server ${CMAKE_THREAD_LIBS_INIT}  ${Boost_LIBRARIES})
+target_link_libraries(bulk_server PRIVATE ${CMAKE_THREAD_LIBS_INIT}  ${Boost_LIBRARIES})
 
 target_compile_options(bulk_server PRIVATE -Wall -Wextra -pedantic -Werror )
 
